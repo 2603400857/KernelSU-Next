@@ -1,0 +1,35 @@
+name: Build LKM for Redmi Note12Turbo
+on:
+  workflow_dispatch:
+
+inputs:
+  kmi:
+    description: KMI Version
+    required: true
+    default: 5.10.236-android12-9-00003-gfb24cf99ad97
+  arch:
+    description: Target Arch
+    required: true
+    default: aarch64
+  susfs:
+    description: Enable SUSFS
+    type: boolean
+    required: true
+    default: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build LKM
+        uses: Ylarod/ddk@main
+        with:
+          target: ${{ inputs.arch }}
+          kmi: ${{ inputs.kmi }}
+          susfs: ${{ inputs.susfs }}
+          build-type: release
+          artifact-name: note12turbo-lkm
