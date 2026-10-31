@@ -3,33 +3,23 @@ on:
   workflow_dispatch:
     inputs:
       kmi:
-        description: KMI Version
+        description: KMI
         required: true
         default: 5.10.236-android12-9-00003-gfb24cf99ad97
       arch:
-        description: Target Arch
+        description: Arch
         required: true
         default: aarch64
       susfs:
-        description: Enable SUSFS
+        description: SUSFS
         type: boolean
         required: true
         default: true
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Build LKM Module
-        uses: Ylarod/ddk@main
-        with:
-          target: ${{ github.event.inputs.arch }}
-          kmi: ${{ github.event.inputs.kmi }}
-          susfs: ${{ github.event.inputs.susfs }}
-          build-type: release
-          artifact-name: note12turbo-lkm
+    uses: Ylarod/ddk/.github/workflows/ddk-lkm.yml@main
+    with:
+      kmi: ${{ github.event.inputs.kmi }}
+      arch: ${{ github.event.inputs.arch }}
+      susfs: ${{ github.event.inputs.susfs }}
