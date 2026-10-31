@@ -3,23 +3,12 @@ on:
   workflow_dispatch:
     inputs:
       kmi:
-        description: KMI
+        description: KMI版本
         required: true
         default: 5.10.236-android12-9-00003-gfb24cf99ad97
-      arch:
-        description: Arch
-        required: true
-        default: aarch64
-      susfs:
-        description: SUSFS
-        type: boolean
-        required: true
-        default: true
 
 jobs:
   build:
     uses: Ylarod/ddk/.github/workflows/ddk-lkm.yml@main
     with:
       kmi: ${{ github.event.inputs.kmi }}
-      arch: ${{ github.event.inputs.arch }}
-      susfs: ${{ github.event.inputs.susfs }}
