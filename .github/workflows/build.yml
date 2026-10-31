@@ -1,0 +1,14 @@
+name: Build KernelSU LKM
+on:
+  workflow_dispatch:
+    inputs:
+      kmi:
+        description: KMI字符串（红米Note12Turbo marble）
+        required: true
+        default: 5.10.236-android12-9-00003-gfb24cf99ad97
+
+jobs:
+  build_ksu:
+    uses: Ylarod/ddk/.github/workflows/ddk-lkm.yml@main
+    with:
+      kmi: ${{ github.event.inputs.kmi }}
