@@ -9,17 +9,6 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/ylarod/ddk:${{ github.event.inputs.kmi }}
-      options: --privileged
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-      - name: Build ko
-        run: make KDIR=$KERNEL_SRC
-      - name: Upload module
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ github.event.inputs.kmi }}-module
-          path: '*.ko'
+    uses: Ylarod/ddk/.github/workflows/ddk-lkm.yml@main
+    with:
+      kmi: ${{ github.event.inputs.kmi }}
